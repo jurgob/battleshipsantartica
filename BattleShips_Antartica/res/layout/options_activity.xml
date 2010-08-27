@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="bottom"
+    >
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:layout_margin="20sp"
+    >
+
+<SMW.battleships.LoginButton android:id="@+id/LoginButton" android:src="@drawable/login_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="30dp"/>
+<!--<Button android:id="@+id/ActivateNotifyFacebook"  android:layout_width="wrap_content" android:layout_height="wrap_content"   android:text="@string/activate_facebook_notification" ></Button>-->
+      <TextView android:id="@+id/FBLoginResult"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" ></TextView>  
+
+</LinearLayout>
+<Button android:id="@+id/ButtonBackMenu"  android:layout_width="fill_parent" android:layout_height="wrap_content"   android:text="@string/back_main" ></Button>
+
+
+</LinearLayout>

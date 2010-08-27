@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical"
+    >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:id="@+id/main_menu"
+    >
+<Button android:text="@string/start_game" android:id="@+id/ButtonStartGame" android:layout_width="250sp" android:layout_height="wrap_content" ></Button>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:id="@+id/start_game_menu"
+    >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    >
+
+<Button android:text="@string/start_single_player_game" android:visibility="visible"  android:id="@+id/btn_start_single_game" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+<Button android:text="@string/host_bt_game" android:visibility="visible" android:id="@+id/btn_host_bt_game" android:layout_width="200sp"  android:layout_height="wrap_content"  ></Button>
+<Button android:text="@string/join_bt_game" android:visibility="visible" android:id="@+id/btn_join_bt_game" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+<Button android:text="@string/host_net_game" android:visibility="visible" android:id="@+id/btn_host_net_game" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+<Button android:text="@string/join_net_game" android:visibility="visible" android:id="@+id/btn_join_net_game" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+
+</LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
+
+
+<Button android:text="@string/options" android:id="@+id/ButtonOptions" android:layout_width="250sp" android:layout_height="wrap_content" ></Button>
+<Button android:text="@string/about" android:id="@+id/ButtonAbout" android:layout_width="250sp" android:layout_height="wrap_content" ></Button>
+
+</LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="SMW.battleships"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".MainMenu"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AboutActivity"
+                  android:label="@string/app_name">
+            
+        </activity>
+        <activity android:name=".GameActivity"
+                  android:label="@string/app_name">
+        
+        </activity>
+         <activity android:name=".GameNetServerActivity"
+                  android:label="@string/app_name">
+        
+        </activity>
+         <activity android:name=".GameNetClientActivity"
+                  android:label="@string/app_name">
+        
+        </activity>
+        <activity android:name=".GameOverActivity"
+                  android:label="@string/app_name">
+		 </activity>
+		 <activity android:name=".OptionsActivity"
+                  android:label="@string/app_name">
+		 </activity>
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+</manifest> 
