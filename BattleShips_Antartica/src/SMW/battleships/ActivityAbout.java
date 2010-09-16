@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class AboutActivity extends Activity {
+public class ActivityAbout extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,8 +18,8 @@ public class AboutActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(AboutActivity.this, MainMenu.class);
-				AboutActivity.this.startActivity(myIntent);
+				Intent myIntent = new Intent(ActivityAbout.this, MainMenu.class);
+				ActivityAbout.this.startActivity(myIntent);
 				
 			}
 		});

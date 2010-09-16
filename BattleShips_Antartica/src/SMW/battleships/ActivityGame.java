@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 
 
-public class GameActivity extends Activity {
+public class ActivityGame extends Activity {
 	//final GameView  game=new GameView(this);
 //	private class UserStrategy  implements BSStrategy,  OnTouchListener  {
 //

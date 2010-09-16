@@ -15,7 +15,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 
 
-public class GameOverActivity extends Activity {
+public class ActivityGameOver extends Activity {
 	
 	AsyncFacebookRunner mAsyncRunner= OptionValues.myAsyncRunner;
 	Facebook mFacebook = OptionValues.facebook;
@@ -43,7 +43,7 @@ public class GameOverActivity extends Activity {
 	            final String postId = values.getString("post_id");
 	            if (postId != null) {
 	                Log.d("Facebook-Example", "Dialog Success! post_id=" + postId);
-	                mAsyncRunner.request(postId, new SMW.battleships.GameOverActivity.WallPostDeleteListener());
+	                mAsyncRunner.request(postId, new SMW.battleships.ActivityGameOver.WallPostDeleteListener());
 	                //mDeleteButton.setOnClickListener(new OnClickListener() {
 //	                    public void onClick(View v) {
 //	                        mAsyncRunner.request(postId, new Bundle(), "DELETE", 
@@ -72,8 +72,8 @@ public class GameOverActivity extends Activity {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Intent intent = new Intent(GameOverActivity.this, MainMenu.class);
-				GameOverActivity.this.startActivity(intent);
+				Intent intent = new Intent(ActivityGameOver.this, MainMenu.class);
+				ActivityGameOver.this.startActivity(intent);
 				return false;
 			}
 		}); 
@@ -82,7 +82,7 @@ public class GameOverActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				mFacebook.dialog(GameOverActivity.this, "stream.publish",
+				mFacebook.dialog(ActivityGameOver.this, "stream.publish",
                         new SampleDialogListener());          
 			}
 		});

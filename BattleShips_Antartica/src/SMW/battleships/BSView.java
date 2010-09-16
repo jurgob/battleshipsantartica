@@ -203,7 +203,7 @@ public class BSView extends TableLayout implements BSUser {
 	public void update(Observable observable, Object data) {
 		System.out.println("Update view model");
 		if(bs.over()){
-			 Intent myIntent = new Intent(getContext(), GameOverActivity.class);
+			 Intent myIntent = new Intent(getContext(), ActivityGameOver.class);
 	    	 getContext().startActivity(myIntent);
 			 //GameActivity.this.startActivity(myIntent);
 			

@@ -13,7 +13,7 @@ import SMW.battleships.core.OptionValues;
 public class BSClient {
 
 
-	  private static final int PORT = 5321;                            // Come NimServer
+	  private static final int PORT = 5554;                            // Come NimServer
 	  
 	  
 	  private class ClientSession  extends Transceiver  implements Runnable {
@@ -97,13 +97,6 @@ public class BSClient {
 	      return bs.over();
 	    }
 	    
-	   // public void shot( int heap, int matches ) {}
-	    
-	    // remove( Move move ) ereditato
-	    
-	    // Mirroring dello stato del gioco (accesso limitato al package):
-	    // solo in questo modo e' possibile modificare lo stato di una istanza NimProxy
-	   
 	    
 	    void mirror( BattleShips bs ) {
 	     

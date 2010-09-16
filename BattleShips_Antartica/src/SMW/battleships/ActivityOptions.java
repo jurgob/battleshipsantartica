@@ -18,7 +18,7 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 
 
-public class OptionsActivity extends Activity {
+public class ActivityOptions extends Activity {
 	
 	 
 	Facebook mFacebook ;
@@ -78,8 +78,8 @@ public class OptionsActivity extends Activity {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Intent intent = new Intent(OptionsActivity.this, MainMenu.class);
-				OptionsActivity.this.startActivity(intent);
+				Intent intent = new Intent(ActivityOptions.this, MainMenu.class);
+				ActivityOptions.this.startActivity(intent);
 				return false;
 			}
 		}); 

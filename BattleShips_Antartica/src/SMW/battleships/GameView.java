@@ -237,7 +237,7 @@ public class GameView extends View implements BSUser {
 	public void update(Observable observable, Object data) {
 		System.out.println("Update view model");
 		if(bs.over()){
-			 Intent myIntent = new Intent(context, GameOverActivity.class);
+			 Intent myIntent = new Intent(context, ActivityGameOver.class);
 	    	 context.startActivity(myIntent);
 	    	 
 			 //GameActivity.this.startActivity(myIntent);

@@ -22,7 +22,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(MainMenu.this, AboutActivity.class);
+				Intent myIntent = new Intent(MainMenu.this, ActivityAbout.class);
 				MainMenu.this.startActivity(myIntent);
 				
 			}
@@ -48,7 +48,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(MainMenu.this, GameActivity.class);
+				Intent myIntent = new Intent(MainMenu.this, ActivityGame.class);
 				MainMenu.this.startActivity(myIntent);
 				
 			}
@@ -59,7 +59,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(MainMenu.this, GameNetServerActivity.class);
+				Intent myIntent = new Intent(MainMenu.this, ActivityGameNetServer.class);
 				MainMenu.this.startActivity(myIntent);
 				
 			}
@@ -70,7 +70,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(MainMenu.this, GameNetClientActivity.class);
+				Intent myIntent = new Intent(MainMenu.this, ActivityGameNetClient.class);
 				MainMenu.this.startActivity(myIntent);
 				
 			}
@@ -83,7 +83,7 @@ public class MainMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(MainMenu.this, OptionsActivity.class);
+				Intent myIntent = new Intent(MainMenu.this, ActivityOptions.class);
 				MainMenu.this.startActivity(myIntent);
 				
 			}

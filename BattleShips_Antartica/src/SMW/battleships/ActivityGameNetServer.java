@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 
 
-public class GameNetServerActivity extends Activity {
+public class ActivityGameNetServer extends Activity {
 	//final GameView  game=new GameView(this);
 //	private class UserStrategy  implements BSStrategy,  OnTouchListener  {
 //
@@ -93,29 +93,41 @@ public class GameNetServerActivity extends Activity {
      BSServer  server = null;
      try {
  		server = new BSServer();
- 	} catch (IOException e) {
- 		// TODO Auto-generated catch block
- 		e.printStackTrace();
- 	}
+ 	} catch (Exception e) {
+		// TODO: handle exception
+	}
     
-    OptionValues.setRows(9);
+  OptionValues.setRows(9);
   OptionValues.setColumns(9);
-  BattleShips bs = new BattleShips(OptionValues.getRows(),OptionValues.getColumns());
-  		BSUser user1 = null;
+  
+  
+  	BattleShips bs = new BattleShips(OptionValues.getRows(),OptionValues.getColumns());
+  		
+  		BSUser remoteUser = null;
 		try {
-			user1 = server.getBSUser();
+			remoteUser = server.getBSUser();
 		} catch (SocketTimeoutException e) {
-			// TODO Auto-generated catch block
+			try {
+				Log.w("timeout", "rserver timeout");
+				server.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-  		user1.setModel(bs);
-  		BSStrategy strategy2= new SequentialStrategy(); 
- 	
- 		BSPlayer player1 = new BSPlayer( bs, user1.userStrategy() );  // Istanziazione giocatori
-	    BSPlayer player2 = new BSPlayer( bs, strategy2 );
+  		//remoteUser.setModel(bs);
+  		BSPlayer player1 = new BSPlayer( bs, remoteUser.userStrategy() );  // Istanziazione giocatori
+	    
+ 		//user 2
+ 		final BSView view= new BSView(this);
+ 		view.setModel(bs);
+ 		
+ 		
+ 		BSPlayer player2 = new BSPlayer( bs, view.userStrategy() );
 	    
 	    BSGame game = new BSGame( bs );                    // Configurazione gioco
 	    game.addPlayer( player1 );
