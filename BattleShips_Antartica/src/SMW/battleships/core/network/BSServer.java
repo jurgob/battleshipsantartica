@@ -10,9 +10,9 @@ import android.util.Log;
 public class BSServer  extends ServerSocket {
 
 
-	  private static final int PORT = 5554;       // Come NimClient
+	  private static final int PORT = 5001;       // Come NimClient
 	  
-	  private static final int TIMEOUT = 600000;  // msec  = 10 minuti
+	  private static final int TIMEOUT = 6000000;  // msec  = 10 minuti
 	  
 	  
 	  // Costruttore:

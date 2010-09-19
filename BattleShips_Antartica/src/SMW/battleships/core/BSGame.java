@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import SMW.battleships.core.BattleShips.DisposeShip;
-import SMW.battleships.core.BattleShips.InsertOrientation;
-import SMW.battleships.core.BattleShips.Move;
 import SMW.battleships.core.BattleShips.Player;
+import android.util.Log;
 
 public class BSGame extends Thread {
 
@@ -36,7 +34,7 @@ public class BSGame extends Thread {
 			p.addShip();
 			waitTShipsDisposition.countDown();
 			//disposeFinished=true;
-			System.out.println("DISPOSITION FINISHED");
+			Log.i("game","DISPOSITION FINISHED");
 //			super.run();
 			
 		}
@@ -50,20 +48,11 @@ public class BSGame extends Thread {
 	public BSGame(BattleShips bs){
 		this.bs=bs;
 		players = new ArrayList<BSPlayer>() {
-
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
-
 		};	
 	}
 	
-	
-//	public void addShip(){
-//		
-//		
-//	}
+
 	
 	public synchronized void addPlayer(BSPlayer player){
 		if(!gameOn) players.add(player);
@@ -78,23 +67,7 @@ public class BSGame extends Thread {
 			
 			n=players.size();
 			if(n==2 ){
-				
-				
-//				players.get(0).addShip();
-//				players.get(0).addShip();
-//				players.get(0).addShip();
-//				players.get(0).addShip();
-//				players.get(0).addShip();
-//				players.get(0).addShip();
-//				
-//				
-//				players.get(1).addShip();
-//				players.get(1).addShip();
-//				players.get(1).addShip();
-//				players.get(1).addShip();
-//				players.get(1).addShip();
-//				players.get(1).addShip();
-				
+					
 				
 				AddShips p1= new AddShips(players.get(0));
 				AddShips p2= new AddShips(players.get(1));
@@ -106,26 +79,10 @@ public class BSGame extends Thread {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-		
-//			    bs.disposeShip(new DisposeShip(0,0, InsertOrientation.HORIZONTAL, Player.ONE));
-//			    bs.disposeShip(new DisposeShip(0,1, InsertOrientation.HORIZONTAL, Player.ONE));
-//			    bs.disposeShip(new DisposeShip(0,2, InsertOrientation.HORIZONTAL, Player.ONE));
-//			    bs.disposeShip(new DisposeShip(0,3, InsertOrientation.HORIZONTAL, Player.ONE));
-//			    bs.disposeShip(new DisposeShip(0,4, InsertOrientation.HORIZONTAL, Player.ONE));
-//			    bs.disposeShip(new DisposeShip(0,5, InsertOrientation.HORIZONTAL, Player.ONE));
-//			     
-//			    bs.disposeShip(new DisposeShip(1,1, InsertOrientation.HORIZONTAL, Player.TWO));
-//			    bs.disposeShip(new DisposeShip(1,2, InsertOrientation.HORIZONTAL, Player.TWO));
-//			    bs.disposeShip(new DisposeShip(1,3, InsertOrientation.HORIZONTAL, Player.TWO));
-//			    bs.disposeShip(new DisposeShip(1,5, InsertOrientation.HORIZONTAL, Player.TWO));
-//			    bs.disposeShip(new DisposeShip(1,6, InsertOrientation.HORIZONTAL, Player.TWO));
-//			    bs.disposeShip(new DisposeShip(8,0, InsertOrientation.VERTICAL, Player.TWO));
-//			     
-				
+				}		     
 				
 				gameOn=true;
-				System.out.println("GAME STARTED");
+				Log.i("game","GAME STARTED");
 			}else{
 				return;
 			}
@@ -136,7 +93,6 @@ public class BSGame extends Thread {
 				(players.get(current)).play();
 			}
 			catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -144,6 +100,6 @@ public class BSGame extends Thread {
 			
 
 		}
-		System.out.println("GAME OVER!!");
+		Log.i("game","GAME OVER!!");
 	}
 }

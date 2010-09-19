@@ -78,7 +78,7 @@ public class Transceiver  extends Observable {
       close();
     
     } catch ( ClassNotFoundException cnfe ) {
-    
+    	
       trace( socket.getInetAddress() + ": received unknown object (" + cnfe + ")" );
       close();
     }

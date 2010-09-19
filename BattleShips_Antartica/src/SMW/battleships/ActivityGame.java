@@ -26,27 +26,7 @@ import android.widget.TextView;
 
 
 public class ActivityGame extends Activity {
-	//final GameView  game=new GameView(this);
-//	private class UserStrategy  implements BSStrategy,  OnTouchListener  {
-//
-//		@Override
-//		public synchronized Move  suggest(BattleShips bs) {
-//			return new Move(game.getSelectedX(), game.getSelectedY());
-//		}
-//
-//		@Override
-//		public boolean  onTouch(View v, MotionEvent event) {
-//			// TODO Auto-generated method stub
-//			game.onTouchEvent(event);
-//			return false;
-//			
-//		}
-//		
-//		
-//	}
-	
-	
-	
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);

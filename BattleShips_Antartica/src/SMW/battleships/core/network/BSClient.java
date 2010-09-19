@@ -13,29 +13,23 @@ import SMW.battleships.core.OptionValues;
 public class BSClient {
 
 
-	  private static final int PORT = 5554;                            // Come NimServer
-	  
-	  
+	  private static final int PORT = 5002;                            // Come NimServer
+	   
 	  private class ClientSession  extends Transceiver  implements Runnable {
-	  
 	    // Costruttore:
-	    
 	    public ClientSession( Socket socket ) {
 	    
 	      super( socket );
 	      
 	      ( new Thread(this) ).start();                                // Avvio ascolto socket
 	    }
-	    
 	    // Thread di ascolto del socket
-	    
 	    public void run() {
-	    
 	      do {                                                         // Socket event loop
 	      
 	        Object action = receive();                                 // <== server
 	        
-	        if        ( action instanceof RemoteSetModel ) {
+	        if( action instanceof RemoteSetModel ) {
 	        
 	          proxy.mirror( ((RemoteSetModel) action).bs );   
 	          
@@ -86,12 +80,7 @@ public class BSClient {
 	    
 	      return bs.getYSize();
 	    }
-	    
-//	    public int matches() {
-//	    
-//	      return nim.matches();
-//	    }
-	    
+    
 	    public boolean over() {
 	    
 	      return bs.over();
