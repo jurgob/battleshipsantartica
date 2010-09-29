@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -48,9 +50,20 @@ public class GameView extends View implements BSUser {
 	
 	TextView myScore;
 	TextView enemyScore;
+	private Handler invHandler;
+	
 	
 	private List<BattleShips.DisposeShip> disposeShipMoves;
 
+	
+	private class Invalidate extends Handler{
+		public void handleMessage(Message msg) {
+			invalidate();
+		}
+		
+	}
+	
+	
 	private class UserStrategy implements BSStrategy, OnTouchListener {
 		
 		@Override
@@ -130,6 +143,8 @@ public class GameView extends View implements BSUser {
 		selected = oTiles * vTiles + 1;
 		//playerToShow=ENEMY;
 		
+		invHandler = new Invalidate();
+		
 		//TODO:delete this, use GUI
 		disposeShipMoves=new ArrayList<BattleShips.DisposeShip>();
 		disposeShipMoves.add(new DisposeShip(0,1, InsertOrientation.HORIZONTAL, ME));
@@ -157,7 +172,7 @@ public class GameView extends View implements BSUser {
 		}
 		
 		
-		invalidate();
+		//invalidate();
 	}
 
 	
@@ -257,7 +272,7 @@ public class GameView extends View implements BSUser {
 			
 			
 		}
-		
+		invHandler.sendMessage(null);
 		//invalidate();
 		// field=((BattleShips)observable).getMyField();
 	}
