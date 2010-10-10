@@ -15,6 +15,8 @@ import SMW.battleships.core.BattleShips.State;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,8 +37,18 @@ public class BSView extends TableLayout implements BSUser {
 	TableRow results;
 	Canvas c;
 
+	Invalidate invalidate;
+	
 	private List<BattleShips.DisposeShip> disposeShipMoves;
 
+	private class Invalidate extends Handler{
+		public void handleMessage(Message msg) {
+			invalidate();
+		}
+		
+	}
+		
+	
 	private class UserStrategy implements BSStrategy, OnTouchListener {
 
 		@Override
@@ -91,6 +103,8 @@ public class BSView extends TableLayout implements BSUser {
 
 	public BSView(Context context) {
 		super(context);
+		invalidate = new Invalidate();
+		
 		fieldView = new BSFieldView(context);
 
 		final Button showMyField = new Button(context);
@@ -108,7 +122,7 @@ public class BSView extends TableLayout implements BSUser {
 				showMyField.setEnabled(false);
 				showEnemyField.setEnabled(true);
 				// invalidate();
-			}
+				invalidate.sendMessage(new Message());			}
 		});
 		showEnemyField.setOnClickListener(new OnClickListener() {
 			@Override
@@ -117,6 +131,7 @@ public class BSView extends TableLayout implements BSUser {
 				showMyField.setEnabled(true);
 				showEnemyField.setEnabled(false);
 				// invalidate();
+				invalidate.sendMessage(new Message());
 			}
 		});
 
@@ -169,7 +184,7 @@ public class BSView extends TableLayout implements BSUser {
 		super.onDraw(canvas);
 		myScore.setText("My Score: " + myScoreVal);
 		enemyScore.setText("Enemy Score: " + enemyScoreVal);
-		invalidate();
+		//invalidate();
 
 	}
 
@@ -179,6 +194,8 @@ public class BSView extends TableLayout implements BSUser {
 		fieldView.bs = bs;
 		bs.addObserver(this);
 		// invalidate();
+		invalidate.sendMessage(new Message());
+
 	}
 
 	@Override
@@ -202,9 +219,9 @@ public class BSView extends TableLayout implements BSUser {
 			// this.startActivity(myIntent);
 		} else {
 			if (bs.conflictOn())
-				messageLabel.setText("Conflict On!");
-			myScoreVal = bs.getScore(ME);
-			enemyScoreVal = bs.getScore(ENEMY);
+				//messageLabel.setText("Conflict On!");
+			//myScoreVal = bs.getScore(ME);
+			//enemyScoreVal = bs.getScore(ENEMY);
 			System.out.println("NEW SCORE: " + myScoreVal);
 
 		}
@@ -212,6 +229,8 @@ public class BSView extends TableLayout implements BSUser {
 		// results.invalidate();
 		// invalidate();
 		// field=((BattleShips)observable).getMyField();
+		invalidate.sendMessage(new Message());
+		
 	}
 
 	@Override

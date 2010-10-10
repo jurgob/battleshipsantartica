@@ -53,7 +53,7 @@ public class GameView extends View implements BSUser {
 	private Handler invHandler;
 	
 	
-	private List<BattleShips.DisposeShip> disposeShipMoves;
+//	private List<BattleShips.DisposeShip> disposeShipMoves;
 
 	
 	private class Invalidate extends Handler{
@@ -108,10 +108,22 @@ public class GameView extends View implements BSUser {
 		@Override
 		public DisposeShip suggestDisposeShip(BattleShips bs) {
 		
-			int location=disposeShipMoves.size()-1;
-			DisposeShip m=disposeShipMoves.get(location);
-			disposeShipMoves.remove(location);
-			return m;			
+//			int location=disposeShipMoves.size()-1;
+//			DisposeShip m=disposeShipMoves.get(location);
+//			disposeShipMoves.remove(location);
+//			return m;			
+			System.out.println("wait player suggest");
+			setOnTouchListener(this);
+			try {
+				wait();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			setOnTouchListener(null);
+			System.out.println("end player suggest");
+
+			return new BattleShips.DisposeShip(getSelectedX(), getSelectedY(), InsertOrientation.HORIZONTAL, ME);
+			
 		}
 	}
 
@@ -146,13 +158,13 @@ public class GameView extends View implements BSUser {
 		invHandler = new Invalidate();
 		
 		//TODO:delete this, use GUI
-		disposeShipMoves=new ArrayList<BattleShips.DisposeShip>();
-		disposeShipMoves.add(new DisposeShip(0,1, InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1,2, InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(2,3, InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1,5, InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1,7, InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(7,0, InsertOrientation.VERTICAL, ME));
+//		disposeShipMoves=new ArrayList<BattleShips.DisposeShip>();
+//		disposeShipMoves.add(new DisposeShip(0,1, InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1,2, InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(2,3, InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1,5, InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1,7, InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(7,0, InsertOrientation.VERTICAL, ME));
 		
 		
 		//end to-delete section

@@ -15,6 +15,7 @@ public class BSPlayer {
 	
 	public void play() throws Exception{
 		if(!bs.over()){
+			//TODO: suggest also dispose ship
 			BattleShips.Move move= strategy.suggest(bs);
 			bs.shot(move);
 			

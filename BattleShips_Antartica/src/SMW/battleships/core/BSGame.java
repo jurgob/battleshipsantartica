@@ -32,6 +32,8 @@ public class BSGame extends Thread {
 			p.addShip();
 			p.addShip();
 			p.addShip();
+			
+			
 			waitTShipsDisposition.countDown();
 			//disposeFinished=true;
 			Log.i("game","DISPOSITION FINISHED");
