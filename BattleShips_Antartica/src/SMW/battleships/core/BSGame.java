@@ -26,6 +26,7 @@ public class BSGame extends Thread {
 		
 		@Override
 		public void run() {
+			Log.i("game", "Player "+p+"start ships dispose");
 			p.addShip();
 			p.addShip();
 			p.addShip();
@@ -36,13 +37,10 @@ public class BSGame extends Thread {
 			
 			waitTShipsDisposition.countDown();
 			//disposeFinished=true;
-			Log.i("game","DISPOSITION FINISHED");
+			Log.i("game","DISPOSITION FINISHED by Player "+p);
 //			super.run();
 			
 		}
-//		public synchronized boolean isDisposeFinished() {
-//			return disposeFinished;
-//		}
 		
 	}
 	

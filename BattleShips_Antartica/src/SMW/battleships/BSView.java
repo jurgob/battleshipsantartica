@@ -51,6 +51,35 @@ public class BSView extends TableLayout implements BSUser {
 	
 	private class UserStrategy implements BSStrategy, OnTouchListener {
 
+	
+
+		@Override
+		public synchronized boolean onTouch(View v, MotionEvent event) {
+			onTouchEvent(event);
+			float x = event.getX();
+			float y = event.getY();
+			float h = fieldView.getHeight() / fieldView.vTiles;
+			float w = fieldView.getWidth() / fieldView.oTiles;
+			int sx = (int) (x / w);
+			int sy = (int) (y / h);
+			
+			if (fieldView.getPlayerToShow() != ME) {
+				if (bs.getField(fieldView.getPlayerToShow())[sx][sy] != State.SEA_HITTED
+						&& bs.getField(playerToShow)[sx][sy] != State.SHIP_HITTED) {
+					Log.i("view", "Good selection");
+					fieldView.selectTile(event);
+					notify();
+				} else {
+					Log.i("view", "Bad Selection:" + sx + " " + sy);
+				}
+			}else{
+				
+				
+			}
+			// invalidate();
+			return true;
+		}
+
 		@Override
 		public synchronized Shot suggest(BattleShips bs) {
 			Log.i("view","wait player suggest");
@@ -65,39 +94,26 @@ public class BSView extends TableLayout implements BSUser {
 
 			return new Shot(fieldView.getSelectedX(), fieldView.getSelectedY());
 		}
-
+		
 		@Override
-		public synchronized boolean onTouch(View v, MotionEvent event) {
-			onTouchEvent(event);
-			if (fieldView.getPlayerToShow() != ME) {
-				float x = event.getX();
-				float y = event.getY();
-				float h = fieldView.getHeight() / fieldView.vTiles;
-				float w = fieldView.getWidth() / fieldView.oTiles;
-				int sx = (int) (x / w);
-				int sy = (int) (y / h);
-				if (bs.getField(fieldView.getPlayerToShow())[sx][sy] != State.SEA_HITTED
-						&& bs.getField(playerToShow)[sx][sy] != State.SHIP_HITTED) {
-					Log.i("view", "Good selection");
+		public synchronized  DisposeShip suggestDisposeShip(BattleShips bs) {
 
-					fieldView.selectTile(event);
-					notify();
-				} else {
-					Log.i("view", "Bad Selection:" + sx + " " + sy);
-
-				}
+//			int location = disposeShipMoves.size() - 1;
+//			DisposeShip m = disposeShipMoves.get(location);
+//			disposeShipMoves.remove(location);
+				
+			System.out.println("wait player suggest");
+			fieldView.setOnTouchListener(this);
+			try {
+				wait();
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
-			// invalidate();
-			return true;
-		}
+			setOnTouchListener(null);
+			System.out.println("end player suggest");
 
-		@Override
-		public DisposeShip suggestDisposeShip(BattleShips bs) {
-
-			int location = disposeShipMoves.size() - 1;
-			DisposeShip m = disposeShipMoves.get(location);
-			disposeShipMoves.remove(location);
-			return m;
+			
+			return new DisposeShip(fieldView.getSelectedX(), fieldView.getSelectedY(), InsertOrientation.HORIZONTAL, ME);
 		}
 	}
 
@@ -109,8 +125,8 @@ public class BSView extends TableLayout implements BSUser {
 
 		final Button showMyField = new Button(context);
 		final Button showEnemyField = new Button(context);
-		showMyField.setText("Show My Field");
-		showEnemyField.setText("Show Enemy Field");
+		showMyField.setText(R.string.show_my_field);
+		showEnemyField.setText(R.string.show_enemy_field);
 
 		showMyField.setEnabled(true);
 		showEnemyField.setEnabled(false);
@@ -161,19 +177,18 @@ public class BSView extends TableLayout implements BSUser {
 		// this.
 
 		// TODO:delete this, use GUI
-		disposeShipMoves = new ArrayList<BattleShips.DisposeShip>();
-		disposeShipMoves.add(new DisposeShip(0, 1,
-				InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1, 2,
-				InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(2, 3,
-				InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1, 5,
-				InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(1, 7,
-				InsertOrientation.HORIZONTAL, ME));
-		disposeShipMoves.add(new DisposeShip(7, 0, InsertOrientation.VERTICAL,
-				ME));
+//		disposeShipMoves = new ArrayList<BattleShips.DisposeShip>();
+//		disposeShipMoves.add(new DisposeShip(0, 1,
+//				InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1, 2,
+//				InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(2, 3,
+//				InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1, 5,
+//				InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(1, 7,
+//				InsertOrientation.HORIZONTAL, ME));
+//		disposeShipMoves.add(new DisposeShip(7, 0, InsertOrientation.VERTICAL,ME));
 
 		// end to-delete section
 

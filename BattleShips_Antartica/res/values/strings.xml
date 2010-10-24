@@ -10,13 +10,11 @@
         <string name="host_bt_game">Host bluetooth game </string>
         <string name="join_bt_game">Join bluetooth game</string>
         <string name="host_net_game">Host net game</string>
-        <string name="join_net_game">Join net game</string>
-        
-        
-    <string name="your_score">Your Score: </string>
+        <string name="join_net_game">Join net game</string>	 
+    <string name="your_score">Your Score:  </string>
     <string name="opponents_score">Opponent\'s Score: </string>
-	<string name="show_my_field">Show My Field </string>
-	<string name="show_enemy_field">Show Opponent\'s Field </string>
+	<string name="show_my_field">My Field </string>
+	<string name="show_enemy_field">Opponent\'s Field </string>
 	<string name="game_over">Game Over </string>
 	<string name="notify_on_facebook">Publish Your Result On Facebook</string>
 	<string name="activate_facebook_notification">Activate Facebook Notification</string>

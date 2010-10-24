@@ -52,8 +52,6 @@ public class BSFieldView extends View {
 		super(context);
 		this.context=context;
 		this.c = new Canvas();
-
-		
 		paintSea = new Paint();
 		paintSea.setColor(Color.argb(255, 0, 0, 255));
 		paintSea.setTextSize(25);
@@ -76,9 +74,6 @@ public class BSFieldView extends View {
 		vTiles = OptionValues.getRows();
 		selected = oTiles * vTiles + 1;
 		//playerToShow=ENEMY;
-		
-	
-		
 	}
 
 

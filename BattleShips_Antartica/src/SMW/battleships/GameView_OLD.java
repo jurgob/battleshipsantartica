@@ -27,7 +27,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class GameView extends View implements BSUser {
+public class GameView_OLD extends View implements BSUser {
 	private Paint paintSea;
 	private Paint paintShip;
 	private Paint paintSeaHitted;
@@ -127,7 +127,7 @@ public class GameView extends View implements BSUser {
 		}
 	}
 
-	public GameView(Context context) {
+	public GameView_OLD(Context context) {
 		super(context);
 		
 		this.context=context;
