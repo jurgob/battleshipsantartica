@@ -8,6 +8,7 @@ import SMW.battleships.core.BSStrategy;
 import SMW.battleships.core.BSUser;
 import SMW.battleships.core.BattleShips;
 import SMW.battleships.core.BattleShips.DisposeShip;
+import SMW.battleships.core.BattleShips.GameStatus;
 import SMW.battleships.core.BattleShips.InsertOrientation;
 import SMW.battleships.core.BattleShips.Player;
 import SMW.battleships.core.BattleShips.Shot;
@@ -51,7 +52,23 @@ public class BSView extends TableLayout implements BSUser {
 	
 	private class UserStrategy implements BSStrategy, OnTouchListener {
 
-	
+		private boolean isValidDisposeShipPosition(int x,int y, Player p){
+			int shipSize=bs.getSizeShipToDisplace(p);
+			Log.d("UI", "size shop to dispose: "+ shipSize);
+			
+			//TODO: actually horizontal orientation is the only one permitted by UI
+			if(true){
+				
+				if(fieldView.oTiles-x< shipSize) return false;
+				for (int i = 0; i < shipSize; i++) {
+					Log.d("UI", "isValidPosition:"+x+i+""+y+" size: "+shipSize +" field width: "+fieldView.oTiles );
+					if(bs.getField(p)[x+i][y]!= State.SEA  ) return false;
+				}	
+			}
+//			bs.getField(ME)[sx][sy] == State.SEA && sx < fieldView.oTiles-3
+			return true;
+			
+		}
 
 		@Override
 		public synchronized boolean onTouch(View v, MotionEvent event) {
@@ -63,7 +80,7 @@ public class BSView extends TableLayout implements BSUser {
 			int sx = (int) (x / w);
 			int sy = (int) (y / h);
 			
-			if (fieldView.getPlayerToShow() != ME) {
+			if ( bs.status==GameStatus.CONFLICT &&  fieldView.getPlayerToShow() != ME) {
 				if (bs.getField(fieldView.getPlayerToShow())[sx][sy] != State.SEA_HITTED
 						&& bs.getField(playerToShow)[sx][sy] != State.SHIP_HITTED) {
 					Log.i("view", "Good selection");
@@ -72,9 +89,15 @@ public class BSView extends TableLayout implements BSUser {
 				} else {
 					Log.i("view", "Bad Selection:" + sx + " " + sy);
 				}
-			}else{
-				
-				
+			}
+			
+			if ( bs.status==GameStatus.DISPLACE &&  fieldView.getPlayerToShow() == ME) {
+				Log.d("UI","Check if is valid dispose");
+				if(  isValidDisposeShipPosition(sx,sy,fieldView.getPlayerToShow()) ){
+					Log.d("UI","Move is valid !!");	
+					fieldView.selectTile(event);
+					notify();	
+				}
 			}
 			// invalidate();
 			return true;
@@ -200,7 +223,6 @@ public class BSView extends TableLayout implements BSUser {
 		myScore.setText("My Score: " + myScoreVal);
 		enemyScore.setText("Enemy Score: " + enemyScoreVal);
 		//invalidate();
-
 	}
 
 	@Override
@@ -210,9 +232,7 @@ public class BSView extends TableLayout implements BSUser {
 		bs.addObserver(this);
 		// invalidate();
 		invalidate.sendMessage(new Message());
-
 	}
-
 	@Override
 	public BSStrategy userStrategy() {
 		if (strategy == null) {
@@ -245,7 +265,6 @@ public class BSView extends TableLayout implements BSUser {
 		// invalidate();
 		// field=((BattleShips)observable).getMyField();
 		invalidate.sendMessage(new Message());
-		
 	}
 
 	@Override

@@ -107,7 +107,7 @@ public class BSFieldView extends View {
 			int x = (i % oTiles);
 			int y = (Math.round(i / oTiles));
 			Paint p = null;
-			if (i == selected && playerToShow != ME) {
+			if (i == selected) {
 				p = paintSelect;
 			} else {
 				if (field[x][y] == State.SEA)

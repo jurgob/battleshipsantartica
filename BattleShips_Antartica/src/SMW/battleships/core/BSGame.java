@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import SMW.battleships.core.BattleShips.GameStatus;
 import SMW.battleships.core.BattleShips.Player;
 import android.util.Log;
 
-public class BSGame extends Thread {
 
+
+public class BSGame extends Thread {
+	
+
+
+	
 	private final BattleShips bs;
 	private List<BSPlayer> players;
 	private boolean gameOn=false;
+
+	
 	final CountDownLatch waitTShipsDisposition = new CountDownLatch(2);
 
 	
@@ -24,9 +32,12 @@ public class BSGame extends Thread {
 			disposeFinished=false;
 		}
 		
+		
+		
 		@Override
 		public void run() {
 			Log.i("game", "Player "+p+"start ships dispose");
+			
 			p.addShip();
 			p.addShip();
 			p.addShip();
@@ -68,7 +79,8 @@ public class BSGame extends Thread {
 			n=players.size();
 			if(n==2 ){
 					
-				
+				bs.status= GameStatus.DISPLACE;
+
 				AddShips p1= new AddShips(players.get(0));
 				AddShips p2= new AddShips(players.get(1));
 				
@@ -80,7 +92,7 @@ public class BSGame extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}		     
-				
+				bs.status= GameStatus.CONFLICT;
 				gameOn=true;
 				Log.i("game","GAME STARTED");
 			}else{

@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
+import android.util.Log;
+
+import SMW.battleships.GameView_OLD;
+
 
 /**
  * 
@@ -24,7 +28,20 @@ public class BattleShips extends Observable {
 			super("Invalid Move, point already hitted");
 		}
 	}
-
+	
+	private void setSizeShipToDisplace(Player p, int size){
+		if(p==Player.ONE) sizeShipToDisplaceP1=size;
+		if(p==Player.TWO) sizeShipToDisplaceP2=size;
+	}
+	
+	public int getSizeShipToDisplace(Player p){
+		if(p==Player.ONE) return sizeShipToDisplaceP1;
+		if(p==Player.TWO) return  sizeShipToDisplaceP2;
+		return 0;	
+	}
+	
+	private int sizeShipToDisplaceP1;
+	private int sizeShipToDisplaceP2;
 	/**
 	 * Ship rappresenta una nave all'interno del gioco
 	 * 
@@ -64,9 +81,17 @@ public class BattleShips extends Observable {
 
 	}
 
+	
+	
+	
 	private List<Ship> shipsP1;
 	private List<Ship> shipsP2;
-
+	public enum GameStatus{
+		DISPLACE, CONFLICT, ENDED 
+		
+	}
+	
+	
 	public enum State {
 		SEA, SHIP, SEA_HITTED, SHIP_HITTED
 	}
@@ -143,7 +168,7 @@ public class BattleShips extends Observable {
 
 	}// end of class Move
 	
-	
+	public GameStatus status=null;
 	private State player1Field[][];
 	private State player2Field[][];
 	private int rows;
@@ -176,6 +201,10 @@ public class BattleShips extends Observable {
 		shipsP2.add(new Ship(2));
 		shipsP2.add(new Ship(2));
 
+		setSizeShipToDisplace(Player.ONE, shipsP1.get(shipsP1.size()-1).getSize());
+		setSizeShipToDisplace(Player.TWO, shipsP2.get(shipsP2.size()-1).getSize());
+
+		
 		Iterator<Ship> itr = shipsP1.iterator();
 		while (itr.hasNext()) {
 			toHit += itr.next().getSize();
@@ -264,11 +293,14 @@ public class BattleShips extends Observable {
 			}
 			
 			if (x <= getXSize() && y <= getYSize() && ships.size() > 0) {
-				int ship = ships.size() - 1;
-				int size = ships.get(ship).getSize();
-
+				int shipIndex = ships.size() - 1;
+				int size = ships.get(shipIndex).getSize();
+				//setSizeShipToDisplace(p, ships.get(ship+1).getSize());
+				Log.d("BS", "size ship to displace: "+size);
+				
 				for (int i = 0; i < size; i++) {
 					// TODO several checks
+					Log.d("BS", "dispose Ship x: "+x+"y: "+y);
 					field[x][y] = State.SHIP;
 					if (o == InsertOrientation.VERTICAL)
 						y ++;
@@ -276,7 +308,10 @@ public class BattleShips extends Observable {
 						x++;
 				}
 
-				ships.remove(ship);
+				ships.remove(shipIndex);
+				if(shipIndex>0)   setSizeShipToDisplace(p, ships.get(ships.size()-1).getSize());
+
+//				setSizeShipToDisplace(p, size);
 				//changeTurn(currentEnemy);
 			}
 		}
