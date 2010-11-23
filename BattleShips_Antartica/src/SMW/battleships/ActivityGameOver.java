@@ -1,9 +1,9 @@
 package SMW.battleships;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.Facebook;
 
 import SMW.battleships.core.OptionValues;
+import SMW.facebook.AsyncFacebookRunner;
+import SMW.facebook.Facebook;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

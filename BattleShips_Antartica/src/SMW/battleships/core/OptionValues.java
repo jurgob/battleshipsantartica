@@ -1,7 +1,7 @@
 package SMW.battleships.core;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.Facebook;
+import SMW.facebook.AsyncFacebookRunner;
+import SMW.facebook.Facebook;
 
  public class OptionValues {
 	 static int rows;

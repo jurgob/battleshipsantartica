@@ -17,7 +17,7 @@ package SMW.battleships;
  */
 
 
-import com.facebook.android.Facebook;
+import SMW.facebook.Facebook;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

@@ -19,6 +19,11 @@ package SMW.battleships;
 
 import SMW.battleships.SessionEvents.AuthListener;
 import SMW.battleships.SessionEvents.LogoutListener;
+import SMW.facebook.AsyncFacebookRunner;
+import SMW.facebook.DialogError;
+import SMW.facebook.Facebook;
+import SMW.facebook.FacebookError;
+import SMW.facebook.Facebook.DialogListener;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,11 +32,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.facebook.android.Facebook.DialogListener;
 
 public class LoginButton extends ImageButton {
    

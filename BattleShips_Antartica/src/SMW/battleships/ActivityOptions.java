@@ -3,6 +3,8 @@ package SMW.battleships;
 import SMW.battleships.SessionEvents.AuthListener;
 import SMW.battleships.SessionEvents.LogoutListener;
 import SMW.battleships.core.OptionValues;
+import SMW.facebook.AsyncFacebookRunner;
+import SMW.facebook.Facebook;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,9 +15,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.facebook.android.AsyncFacebookRunner;
 
-import com.facebook.android.Facebook;
 
 
 public class ActivityOptions extends Activity {

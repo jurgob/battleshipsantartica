@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import SMW.facebook.FacebookError;
+import SMW.facebook.AsyncFacebookRunner.RequestListener;
 import android.util.Log;
 
-import com.facebook.android.FacebookError;
-import com.facebook.android.AsyncFacebookRunner.RequestListener;
 
 /**
  * Skeleton base class for RequestListeners, providing default error 
