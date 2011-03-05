@@ -16,6 +16,7 @@
 
 package SMW.facebook;
 
+import SMW.battleships.R;
 import SMW.facebook.Facebook.DialogListener;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -37,8 +38,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.android.R;
-import com.facebook.android.R.drawable;
 
 public class FbDialog extends Dialog {
 
