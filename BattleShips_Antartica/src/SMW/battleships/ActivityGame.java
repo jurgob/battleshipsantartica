@@ -39,7 +39,8 @@ public class ActivityGame extends Activity {
      final BSView  gameView=new BSView(this);
      gameView.setModel(bs);
      BSPlayer human= new BSPlayer(bs,gameView.userStrategy() );
-     BSPlayer computer = new BSPlayer(bs, new SequentialStrategy());
+//     BSPlayer computer = new BSPlayer(bs, new SequentialStrategy());
+     BSPlayer computer = new BSPlayer(bs, new DummyStrategy());
      BSGame game = new BSGame(bs);
      game.addPlayer(human);
      gameView.setPlayer(human.player);
