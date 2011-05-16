@@ -1,6 +1,5 @@
 package SMW.battleships;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -16,12 +15,15 @@ import SMW.battleships.core.BattleShips.State;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -35,16 +37,32 @@ public class BSView extends TableLayout implements BSUser {
 	private BSStrategy strategy = null;
 	Player ME, ENEMY;
 	TextView myScore, enemyScore, messageLabel;
-	TableRow results;
+	LinearLayout results;
 	Canvas c;
-
+	int totShips = 6;
 	Invalidate invalidate;
+	TextView currentField;
 	
 	private List<BattleShips.DisposeShip> disposeShipMoves;
 
 	private class Invalidate extends Handler{
 		public void handleMessage(Message msg) {
-			invalidate();
+			try{
+				Bundle b= msg.getData();
+				if(b.getString("type").equals("up_score")){
+					setStatus(b.getString("status"));
+					setMyScore(b.getInt("myScore"));
+					setEnemyScore(b.getInt("enemyScore"));
+				}
+				if(b.getString("type").equals("up_status")){
+					setStatus(b.getString("status"));
+					
+				}
+				invalidate();
+			}finally{
+				invalidate();
+				
+			}
 		}
 		
 	}
@@ -114,7 +132,12 @@ public class BSView extends TableLayout implements BSUser {
 			}
 			fieldView.setOnTouchListener(null);
 			Log.i("view","end player suggestion");
-
+			Message m = new Message();
+			Bundle b = new Bundle();
+			b.putString("type", "refresh");
+//			b.putString("status", "Enemy's turn");
+			m.setData(b);
+			invalidate.sendMessage(m);			
 			return new Shot(fieldView.getSelectedX(), fieldView.getSelectedY());
 		}
 		
@@ -142,14 +165,21 @@ public class BSView extends TableLayout implements BSUser {
 
 	public BSView(Context context) {
 		super(context);
+		
+		
 		invalidate = new Invalidate();
 		
 		fieldView = new BSFieldView(context);
 
 		final Button showMyField = new Button(context);
+		//final Button showMyField = (Button)this.findViewById(R.id.my_field_button);
 		final Button showEnemyField = new Button(context);
-		showMyField.setText(R.string.show_my_field);
-		showEnemyField.setText(R.string.show_enemy_field);
+		//final Button showEnemyField = (Button)this.findViewById(R.id.enemy_field_button); 
+		currentField = new TextView(context);
+		currentField.setText(R.string.enemy_field);
+		
+		showMyField.setText("<<");
+		showEnemyField.setText(">>");
 
 		showMyField.setEnabled(true);
 		showEnemyField.setEnabled(false);
@@ -160,8 +190,12 @@ public class BSView extends TableLayout implements BSUser {
 				setPlayerToShow(ME);
 				showMyField.setEnabled(false);
 				showEnemyField.setEnabled(true);
-				// invalidate();
-				invalidate.sendMessage(new Message());			}
+				currentField.setText(R.string.my_field);
+				Message m = new Message();
+				Bundle b = new Bundle();
+				b.putString("type", "change_field");
+				m.setData(b);
+				invalidate.sendMessage(m);			}
 		});
 		showEnemyField.setOnClickListener(new OnClickListener() {
 			@Override
@@ -169,59 +203,65 @@ public class BSView extends TableLayout implements BSUser {
 				setPlayerToShow(ENEMY);
 				showMyField.setEnabled(true);
 				showEnemyField.setEnabled(false);
-				// invalidate();
-				invalidate.sendMessage(new Message());
-			}
+				currentField.setText(R.string.enemy_field);
+				Message m = new Message();
+				Bundle b = new Bundle();
+				b.putString("type", "change_field");
+				m.setData(b);
+				invalidate.sendMessage(m);			}
 		});
 
 		c = new Canvas();
 		myScore = new TextView(context);
 		enemyScore = new TextView(context);
 		messageLabel = new TextView(context);
-		myScore.setText("MyScore: 0");
-		enemyScore.setText("Enemy Score: 0");
+		
+		setMyScore(0);
+		setEnemyScore(0);
 		messageLabel.setText("Dispose your ships");
-
-		results = new TableRow(context);
-
+		results = new LinearLayout(context);
 		results.addView(myScore);
 		results.addView(enemyScore);
-		results.addView(messageLabel);
-
+		TableRow statusBar = new TableRow(context);
+		statusBar.addView(messageLabel);
 		this.addView(results);
-
-		TableRow buttons = new TableRow(context);
+		LinearLayout buttons = new LinearLayout(context);
 		buttons.addView(showMyField);
 		buttons.addView(showEnemyField);
-		this.addView(buttons);
+		buttons.addView(currentField);
+
+		this.addView(buttons );
+		
+		this.addView(statusBar);
 
 		this.addView(fieldView);
+		int spacingH= 10;
+		int spacingV= 2;
+		results.setGravity(Gravity.LEFT);
+		myScore.setGravity(Gravity.LEFT);
+		myScore.setPadding(0, 0, spacingH, 0);
+		enemyScore.setGravity(Gravity.LEFT);
+		currentField.setTextSize(25);
+		currentField.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT));
+		currentField.setGravity(Gravity.CENTER );
+		
+		//showMyField.setLayoutParams(new LayoutParams(new MarginLayoutParams(0, 0)));
+		statusBar.setPadding(0, spacingV, 0, spacingV);
+		
+		this.setPadding(spacingH, spacingV, spacingH, spacingV);
+		
+		
 		this.setWillNotDraw(false);
-		// this.
-
-		// TODO:delete this, use GUI
-//		disposeShipMoves = new ArrayList<BattleShips.DisposeShip>();
-//		disposeShipMoves.add(new DisposeShip(0, 1,
-//				InsertOrientation.HORIZONTAL, ME));
-//		disposeShipMoves.add(new DisposeShip(1, 2,
-//				InsertOrientation.HORIZONTAL, ME));
-//		disposeShipMoves.add(new DisposeShip(2, 3,
-//				InsertOrientation.HORIZONTAL, ME));
-//		disposeShipMoves.add(new DisposeShip(1, 5,
-//				InsertOrientation.HORIZONTAL, ME));
-//		disposeShipMoves.add(new DisposeShip(1, 7,
-//				InsertOrientation.HORIZONTAL, ME));
-//		disposeShipMoves.add(new DisposeShip(7, 0, InsertOrientation.VERTICAL,ME));
-
-		// end to-delete section
+	
 
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		myScore.setText("My Score: " + myScoreVal);
-		enemyScore.setText("Enemy Score: " + enemyScoreVal);
+		//setMyScore(myScoreVal);
+		//setEnemyScore(enemyScoreVal);
+		
 		//invalidate();
 	}
 
@@ -231,7 +271,12 @@ public class BSView extends TableLayout implements BSUser {
 		fieldView.bs = bs;
 		bs.addObserver(this);
 		// invalidate();
-		invalidate.sendMessage(new Message());
+		Bundle b = new Bundle();
+		b.putString("type", "refresh");
+		Message msg = new Message();
+		msg.setData(b);
+		
+		invalidate.sendMessage(msg);
 	}
 	@Override
 	public BSStrategy userStrategy() {
@@ -244,27 +289,27 @@ public class BSView extends TableLayout implements BSUser {
 	@Override
 	public void update(Observable observable, Object data) {
 		System.out.println("Update view model");
+		Message msg = new Message();
+		Bundle b = new Bundle();
+		
 		if (bs.over()) {
 			Intent myIntent = new Intent(getContext(), ActivityGameOver.class);
 			getContext().startActivity(myIntent);
-			// GameActivity.this.startActivity(myIntent);
-
-			// Intent myIntent = new Inte
-			// Intent myIntent = new Intent();
-			// this.startActivity(myIntent);
 		} else {
-			if (bs.conflictOn())
-				//messageLabel.setText("Conflict On!");
-			//myScoreVal = bs.getScore(ME);
-			//enemyScoreVal = bs.getScore(ENEMY);
-			System.out.println("NEW SCORE: " + myScoreVal);
-
+			if (bs.conflictOn() ){
+					b.putString("type", "up_score");
+					if(bs.getCurrenPlayer() == ME) b.putString("status", "Your Turn");
+					if(bs.getCurrenPlayer() == ENEMY) b.putString("status", "Enemy's Turn");
+					b.putInt("myScore", bs.getScore(ME) );
+					b.putInt("enemyScore", bs.getScore(ENEMY));
+				}else {
+					b.putString("type", "up_status");
+					b.putString("status", "Dispose your ship (ship size: "+bs.getSizeShipToDisplace(ME)+")"	);
+			}	
+			msg.setData(b);
+			invalidate.sendMessage(msg);
 		}
-		// myScore.invalidate();
-		// results.invalidate();
-		// invalidate();
-		// field=((BattleShips)observable).getMyField();
-		invalidate.sendMessage(new Message());
+		
 	}
 
 	@Override
@@ -281,4 +326,20 @@ public class BSView extends TableLayout implements BSUser {
 		fieldView.setPlayerToShow(playerToShow);
 	}
 
+	public void setStatus(String msg){
+		this.messageLabel.setText(msg);
+		
+	}
+	
+	public void setMyScore(int scr){
+		this.myScore.setText("My Score: "+scr);
+		
+	}
+	
+	public void setEnemyScore(int scr){
+		this.enemyScore.setText("Enemy Score: "+scr);
+		
+	}
+	
+	
 }

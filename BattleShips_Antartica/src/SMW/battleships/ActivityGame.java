@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +27,7 @@ import android.widget.TextView;
 
 
 public class ActivityGame extends Activity {
-
+	BSView  gameView;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class ActivityGame extends Activity {
      OptionValues.setRows(9);
      OptionValues.setColumns(9);
      BattleShips bs = new BattleShips(OptionValues.getRows(),OptionValues.getColumns());
-     final BSView  gameView=new BSView(this);
+     gameView=new BSView(this);
      gameView.setModel(bs);
      BSPlayer human= new BSPlayer(bs,gameView.userStrategy() );
 //     BSPlayer computer = new BSPlayer(bs, new SequentialStrategy());
@@ -55,4 +56,5 @@ public class ActivityGame extends Activity {
      game.start();
       
 	}
+
 }

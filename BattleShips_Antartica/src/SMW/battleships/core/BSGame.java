@@ -80,7 +80,7 @@ public class BSGame extends Thread {
 			if(n==2 ){
 					
 				bs.status= GameStatus.DISPLACE;
-
+				
 				AddShips p1= new AddShips(players.get(0));
 				AddShips p2= new AddShips(players.get(1));
 				

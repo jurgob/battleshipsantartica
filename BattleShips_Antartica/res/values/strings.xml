@@ -24,6 +24,8 @@
 	<string name="logged_out">Logged Out!</string>
 	<string name="login_failed">Login Failed!</string>
 	<string name="logout_failed">Logout Failed!</string>
+	<string name="enemy_field">Enemy\'s Field</string>
+	<string name="my_field">My Field</string>
 	
 	
 </resources>

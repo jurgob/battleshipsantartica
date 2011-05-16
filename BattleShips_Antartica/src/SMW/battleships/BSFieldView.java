@@ -107,9 +107,9 @@ public class BSFieldView extends View {
 			int x = (i % oTiles);
 			int y = (Math.round(i / oTiles));
 			Paint p = null;
-			if (i == selected) {
-				p = paintSelect;
-			} else {
+//			if (i == selected) {
+//				p = paintSelect;
+//			} else {
 				if (field[x][y] == State.SEA)
 					p = paintSea;
 				if (field[x][y] == State.SHIP)
@@ -118,7 +118,7 @@ public class BSFieldView extends View {
 					p = paintSeaHitted;
 				if (field[x][y] == State.SHIP_HITTED)
 					p = paintShipHitted;
-			}
+//			}
 			c.drawRect(x * w + b, y * h + b, x * w + w - b, y * h + h - b, p);
 		}
 		this.c = c;
