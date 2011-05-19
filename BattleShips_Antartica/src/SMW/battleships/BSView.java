@@ -15,6 +15,7 @@ import SMW.battleships.core.BattleShips.State;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +43,8 @@ public class BSView extends TableLayout implements BSUser {
 	int totShips = 6;
 	Invalidate invalidate;
 	TextView currentField;
-	
+	BattleShips.InsertOrientation o = BattleShips.InsertOrientation.VERTICAL;
+
 	private List<BattleShips.DisposeShip> disposeShipMoves;
 
 	private class Invalidate extends Handler{
@@ -70,19 +72,22 @@ public class BSView extends TableLayout implements BSUser {
 	
 	private class UserStrategy implements BSStrategy, OnTouchListener {
 
-		private boolean isValidDisposeShipPosition(int x,int y, Player p){
+		private boolean isValidDisposeShipPosition(int x,int y, InsertOrientation o, Player p){
 			int shipSize=bs.getSizeShipToDisplace(p);
 			Log.d("UI", "size shop to dispose: "+ shipSize);
 			
 			//TODO: actually horizontal orientation is the only one permitted by UI
-			if(true){
-				
-				if(fieldView.oTiles-x< shipSize) return false;
-				for (int i = 0; i < shipSize; i++) {
-					Log.d("UI", "isValidPosition:"+x+i+""+y+" size: "+shipSize +" field width: "+fieldView.oTiles );
-					if(bs.getField(p)[x+i][y]!= State.SEA  ) return false;
-				}	
-			}
+			if(o==InsertOrientation.HORIZONTAL && fieldView.oTiles-x< shipSize ) return false;
+			if(o==InsertOrientation.VERTICAL&& fieldView.vTiles-y< shipSize ) return false;
+			for (int i = 0; i < shipSize; i++) {
+				int mx=x;
+				int my=y;
+				if(o==InsertOrientation.HORIZONTAL) mx= x+i;
+				if(o==InsertOrientation.VERTICAL) my =y+i;
+				Log.d("UI", "isValidPosition:"+x+" "+y+" size: "+shipSize +" field width: "+fieldView.oTiles + "field height: "+fieldView.vTiles);
+				if(bs.getField(p)[mx][my]!= State.SEA  ) return false;
+			}	
+			
 //			bs.getField(ME)[sx][sy] == State.SEA && sx < fieldView.oTiles-3
 			return true;
 			
@@ -111,7 +116,7 @@ public class BSView extends TableLayout implements BSUser {
 			
 			if ( bs.status==GameStatus.DISPLACE &&  fieldView.getPlayerToShow() == ME) {
 				Log.d("UI","Check if is valid dispose");
-				if(  isValidDisposeShipPosition(sx,sy,fieldView.getPlayerToShow()) ){
+				if(  isValidDisposeShipPosition(sx,sy,o,fieldView.getPlayerToShow()) ){
 					Log.d("UI","Move is valid !!");	
 					fieldView.selectTile(event);
 					notify();	
@@ -159,7 +164,7 @@ public class BSView extends TableLayout implements BSUser {
 			System.out.println("end player suggest");
 
 			
-			return new DisposeShip(fieldView.getSelectedX(), fieldView.getSelectedY(), InsertOrientation.HORIZONTAL, ME);
+			return new DisposeShip(fieldView.getSelectedX(), fieldView.getSelectedY(), InsertOrientation.VERTICAL, ME);
 		}
 	}
 
