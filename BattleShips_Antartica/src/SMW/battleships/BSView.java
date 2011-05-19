@@ -46,11 +46,16 @@ public class BSView extends TableLayout implements BSUser {
 	BattleShips.InsertOrientation currentInsertOrientation;
 	final Button changeOrientation ;
 
+	private LinearLayout buttons;
+
 	private class Invalidate extends Handler{
 		public void handleMessage(Message msg) {
 			try{
-				Bundle b= msg.getData();
+				System.out.println("buttons size: "+buttons.getChildCount());
+				if(bs.conflictOn() && buttons.getChildCount()==4 )buttons.removeViewAt(0);
+				Bundle b= msg.getData(); 
 				if(b.getString("type").equals("up_score")){
+					
 					setStatus(b.getString("status"));
 					setMyScore(b.getInt("myScore"));
 					setEnemyScore(b.getInt("enemyScore"));
@@ -272,7 +277,7 @@ public class BSView extends TableLayout implements BSUser {
 		TableRow statusBar = new TableRow(context);
 		statusBar.addView(messageLabel);
 		this.addView(results);
-		LinearLayout buttons = new LinearLayout(context);
+		buttons = new LinearLayout(context);
 		buttons.addView(changeOrientation);
 		buttons.addView(showMyField);
 		buttons.addView(showEnemyField);
