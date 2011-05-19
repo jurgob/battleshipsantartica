@@ -43,9 +43,8 @@ public class BSView extends TableLayout implements BSUser {
 	int totShips = 6;
 	Invalidate invalidate;
 	TextView currentField;
-	BattleShips.InsertOrientation o = BattleShips.InsertOrientation.VERTICAL;
-
-	private List<BattleShips.DisposeShip> disposeShipMoves;
+	BattleShips.InsertOrientation currentInsertOrientation;
+	final Button changeOrientation ;
 
 	private class Invalidate extends Handler{
 		public void handleMessage(Message msg) {
@@ -116,7 +115,7 @@ public class BSView extends TableLayout implements BSUser {
 			
 			if ( bs.status==GameStatus.DISPLACE &&  fieldView.getPlayerToShow() == ME) {
 				Log.d("UI","Check if is valid dispose");
-				if(  isValidDisposeShipPosition(sx,sy,o,fieldView.getPlayerToShow()) ){
+				if(  isValidDisposeShipPosition(sx,sy,currentInsertOrientation,fieldView.getPlayerToShow()) ){
 					Log.d("UI","Move is valid !!");	
 					fieldView.selectTile(event);
 					notify();	
@@ -164,10 +163,33 @@ public class BSView extends TableLayout implements BSUser {
 			System.out.println("end player suggest");
 
 			
-			return new DisposeShip(fieldView.getSelectedX(), fieldView.getSelectedY(), InsertOrientation.VERTICAL, ME);
+			return new DisposeShip(fieldView.getSelectedX(), fieldView.getSelectedY(), currentInsertOrientation, ME);
 		}
 	}
 
+	private void paintChangeOrientationButton(){
+		switch (currentInsertOrientation) {
+		case VERTICAL:
+			changeOrientation.setText("|");
+			break;
+		case HORIZONTAL:
+			changeOrientation.setText("-");
+			break;
+		}
+		
+	}
+	private void changeCurrentOrientation(){
+		switch (currentInsertOrientation) {
+		case VERTICAL:
+			currentInsertOrientation=InsertOrientation.HORIZONTAL;
+			break;
+		case HORIZONTAL:
+			currentInsertOrientation=InsertOrientation.VERTICAL;
+			break;
+		}
+		
+	}
+	
 	public BSView(Context context) {
 		super(context);
 		
@@ -215,7 +237,27 @@ public class BSView extends TableLayout implements BSUser {
 				m.setData(b);
 				invalidate.sendMessage(m);			}
 		});
+		changeOrientation = new Button(context);
+		currentInsertOrientation = BattleShips.InsertOrientation.VERTICAL;
+		paintChangeOrientationButton();
+		changeOrientation.setOnClickListener(
+				new OnClickListener() {
+						//TODO: it is buggy
+						@Override
+						public void onClick(View v) {
+							changeCurrentOrientation();
+							paintChangeOrientationButton();
+							Message m = new Message();
+							Bundle b = new Bundle();
+							b.putString("type", "refresh");
+							Message msg = new Message();
+							msg.setData(b);
+							invalidate.sendMessage(msg);
+					}
+				}
+		);
 
+		
 		c = new Canvas();
 		myScore = new TextView(context);
 		enemyScore = new TextView(context);
@@ -231,6 +273,7 @@ public class BSView extends TableLayout implements BSUser {
 		statusBar.addView(messageLabel);
 		this.addView(results);
 		LinearLayout buttons = new LinearLayout(context);
+		buttons.addView(changeOrientation);
 		buttons.addView(showMyField);
 		buttons.addView(showEnemyField);
 		buttons.addView(currentField);

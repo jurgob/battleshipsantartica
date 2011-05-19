@@ -267,7 +267,7 @@ public class BattleShips extends Observable {
 	 * 
 	 * @param x
 	 * @param y
-	 * @param o
+	 * @param currentInsertOrientation
 	 * @param p
 	 *
 	 * disposeShip consente di disporre una nave all'interno del proprio campo di battaglia

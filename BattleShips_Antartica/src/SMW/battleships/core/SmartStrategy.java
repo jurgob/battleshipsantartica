@@ -73,13 +73,13 @@ public class SmartStrategy implements BSStrategy{
 	}
 	
 	private boolean areValidCoord(int x, int y) {
-		boolean res=true;
 		
-		if(x >= bs.getXSize()-1  || x <0) res=false;
-		if(y >= bs.getYSize()-1 || y <0) res=false;
-		if(field[x][y] == BattleShips.State.SHIP_HITTED) res=false;  
-		if(field[x][y] == BattleShips.State.SEA_HITTED) res=false;
-		return res;
+		if(x >= bs.getXSize() || x <0) return false;
+		if(y >= bs.getYSize() || y <0) return false;
+		if(field[x][y] == BattleShips.State.SHIP_HITTED) return false;  
+		if(field[x][y] == BattleShips.State.SEA_HITTED) return false;
+		
+		return true;
 		
 	}
 	
@@ -117,6 +117,7 @@ public class SmartStrategy implements BSStrategy{
 			System.out.println("-- FIRST HITTED: "+firstHitted.x+" "+firstHitted.y);
 			while (state<5) {
 				state++;
+				System.out.println("suggest: "+(state-1));
 				int sx=lastMove.x+suggX[state-1];
 				int sy=lastMove.y+suggY[state-1];
 				if(  areValidCoord(  sx, sy)  ){
@@ -129,7 +130,7 @@ public class SmartStrategy implements BSStrategy{
 
 			
 			//Shot( lastMove.x+suggX[0],  lastMove.y+suggY[0]);
-		}else if(lastHit && (state>0) ){
+		}else if(lastHit && (state>1) ){
 			while (state<5) {
 				int sx=lastMove.x+suggX[state-1];
 				int sy=lastMove.y+suggY[state-1];
@@ -156,7 +157,8 @@ public class SmartStrategy implements BSStrategy{
 					}
 				
 			} 
-		} else	if(!lastHit && state == 3){
+		} else	
+		if(!lastHit && state == 2){
 			System.out.println("--CAMBRIO DI ROTTA VERTCALE!!!!");
 			if(firstHitted != null){
 					System.out.println("--FIRST HIT PRESENT!!!!");
