@@ -7,6 +7,7 @@ import SMW.battleships.core.BattleShips;
 import SMW.battleships.core.DummyStrategy;
 import SMW.battleships.core.OptionValues;
 import SMW.battleships.core.SequentialStrategy;
+import SMW.battleships.core.SmartStrategy;
 import SMW.battleships.core.BattleShips.InsertOrientation;
 import SMW.battleships.core.BattleShips.Move;
 import SMW.battleships.core.BattleShips.Player;
@@ -41,7 +42,8 @@ public class ActivityGame extends Activity {
      gameView.setModel(bs);
      BSPlayer human= new BSPlayer(bs,gameView.userStrategy() );
 //     BSPlayer computer = new BSPlayer(bs, new SequentialStrategy());
-     BSPlayer computer = new BSPlayer(bs, new DummyStrategy());
+//     BSPlayer computer = new BSPlayer(bs, new DummyStrategy());
+     BSPlayer computer = new BSPlayer(bs, new SmartStrategy());
      BSGame game = new BSGame(bs);
      game.addPlayer(human);
      gameView.setPlayer(human.player);
