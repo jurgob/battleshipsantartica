@@ -24,10 +24,7 @@ public class SmartStrategy implements BSStrategy{
 	int[] suggY={0,1,0,-1};
 	int tryDirection=0;
 	Move firstHitted=null;
-	boolean isNotRandomTry=false;
-	boolean iKnowShipOrientation = false;
-	boolean iHaveChangedDirection =true;
-	
+
 	public SmartStrategy() {
 		disposeShipMoves=new ArrayList<BattleShips.DisposeShip>();
 		disposeShipMoves.add(new DisposeShip(1,1, InsertOrientation.HORIZONTAL, null));
@@ -46,10 +43,7 @@ public class SmartStrategy implements BSStrategy{
 		Random r= new Random(System.currentTimeMillis());
 		
 		while(!originalMove){
-//			x = ((int)Math.random()*bs.getXSize()*10 )%bs.getXSize();
-//			y = ((int)Math.random()*bs.getYSize()*10 )%bs.getYSize();
-			
-			r.setSeed(System.currentTimeMillis());
+		r.setSeed(System.currentTimeMillis());
 			x =r.nextInt(bs.getXSize()-1);
 			y = r.nextInt(bs.getYSize()-1);
 			System.out.println("size: "+bs.getXSize()+" "+bs.getYSize() );
@@ -87,37 +81,24 @@ public class SmartStrategy implements BSStrategy{
 	public  Shot suggest(BattleShips bs) {
 		this.bs=bs;
 		Shot m =null;
-		Shot suggest =null;
 		Shot lastMove=null;
-		Shot last2Move=null;
-		Shot last3Move=null;
+
 		boolean lastHit = false;
-		boolean last2Hit= false;
-		boolean last3Hit= false;
+
 		 field = bs.getField(BattleShips.getEnemy(bs.getCurrenPlayer()));
 		if(history.size() > 0){ 
 			lastMove = history.get(history.size()-1);
 			if(field[lastMove.x][lastMove.y] == BattleShips.State.SHIP_HITTED ) lastHit=true;
 			
 		}
-		if(history.size() > 1){ 
-			last2Move = history.get(history.size()-2);
-			if(field[last2Move.x][last2Move.y] == BattleShips.State.SHIP_HITTED ) last2Hit=true;
-		}
 		
-		if(history.size() > 2){ 
-			last3Move = history.get(history.size()-3);
-			if(field[last3Move.x][last3Move.y] == BattleShips.State.SHIP_HITTED ) last3Hit=true;
-		}
-	
-		
-		
+	try{	
 		if(lastHit && state==0 ){
 			firstHitted=lastMove;
 			System.out.println("-- FIRST HITTED: "+firstHitted.x+" "+firstHitted.y);
 			while (state<5) {
 				state++;
-				System.out.println("suggest: "+(state-1));
+				System.out.println("suggest increase from first: "+(state-1));
 				int sx=lastMove.x+suggX[state-1];
 				int sy=lastMove.y+suggY[state-1];
 				if(  areValidCoord(  sx, sy)  ){
@@ -130,8 +111,9 @@ public class SmartStrategy implements BSStrategy{
 
 			
 			//Shot( lastMove.x+suggX[0],  lastMove.y+suggY[0]);
-		}else if(lastHit && (state>1) ){
+		}else if(lastHit && (state>0) ){
 			while (state<5) {
+				System.out.println("suggest increase "+(state-1));
 				int sx=lastMove.x+suggX[state-1];
 				int sy=lastMove.y+suggY[state-1];
 				if(  areValidCoord(  sx, sy)  ){
@@ -144,7 +126,7 @@ public class SmartStrategy implements BSStrategy{
 			
 		}
 		
-		if(!lastHit && state == 1){
+		if(m==null &&  !lastHit && state == 1){
 			System.out.println("--CAMBRIO DI ROTTA ORIZZONTALE!!!!");
 			if(firstHitted != null){
 					System.out.println("--FIRST HIT PRESENT!!!!");
@@ -157,8 +139,9 @@ public class SmartStrategy implements BSStrategy{
 					}
 				
 			} 
-		} else	
-		if(!lastHit && state == 2){
+		} 
+		
+		if( m==null&& !lastHit && state == 2){
 			System.out.println("--CAMBRIO DI ROTTA VERTCALE!!!!");
 			if(firstHitted != null){
 					System.out.println("--FIRST HIT PRESENT!!!!");
@@ -171,16 +154,29 @@ public class SmartStrategy implements BSStrategy{
 					}
 				
 			} 
-		}	 
+		}
 		
-		
+		if(m==null &&  !lastHit && state == 3){
+				System.out.println("--CAMBRIO DI ROTTA DA ORIZZONTALE A VERTCALE!!!!");
+				if(firstHitted != null){
+						System.out.println("--FIRST HIT PRESENT!!!!");
+						int sx=firstHitted.x+suggX[1];
+						int sy=firstHitted.y+suggY[1];
+						if(  areValidCoord(  sx, sy)  ){
+							System.out.println("--NON RANDOM 3: "+sx+" "+sy);
+							m= new Shot(sx, sy);
+							state=2;
+						}
+					
+				} 
+			}
+	}catch (Exception e) {
+		m=null;
+	}
 		if(m == null ){
 			System.out.println("--RANDOM MOVE");
 			m = randomShotSugggest(bs);
 			state=0;
-			isNotRandomTry=false;
-			iHaveChangedDirection=false;
-			iKnowShipOrientation=false;
 			tryDirection=0;
 			firstHitted=null;
 		}
@@ -192,7 +188,6 @@ public class SmartStrategy implements BSStrategy{
 
 	@Override
 	public DisposeShip suggestDisposeShip(BattleShips bs) {
-		// TODO Auto-generated method stub
 		int location=disposeShipMoves.size()-1;
 		DisposeShip m=disposeShipMoves.get(location);
 		disposeShipMoves.remove(location);
