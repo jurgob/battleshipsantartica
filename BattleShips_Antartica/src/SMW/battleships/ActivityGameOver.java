@@ -82,8 +82,27 @@ public class ActivityGameOver extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				mFacebook.dialog(ActivityGameOver.this, "stream.publish",
-                        new SampleDialogListener());          
+	        	SampleDialogListener sdl = new SampleDialogListener();
+            	Bundle b = new Bundle();
+            	String src = "http://fp.academic.venturacollege.edu/athletics/w_basketball/WBB_2010-11/VC_Pirate_Ship.jpg";
+            	String href="http://apps.facebook.com/bs_antartica_demo/";
+            	String name="I have just played with Battleships Antartica";
+            	String description="I Won!!";
+            	b.putString("attachment", "{" +
+            			"'name': '"+name+"'," +
+            			"'description': '"+description+"'," +
+            			"'media': [{" +
+            			"'type': 'image',"+
+            			" 'src': '"+src+"',"+ 
+            			"'href': '"+href+"'," +
+            			"}]}" 
+            			
+            	);            	
+                mFacebook.dialog(ActivityGameOver.this, "stream.publish", b,sdl);          
+			                
+				
+				
+			
 			}
 		});
         
