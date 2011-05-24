@@ -26,6 +26,9 @@
 	<string name="logout_failed">Logout Failed!</string>
 	<string name="enemy_field">Enemy\'s Field</string>
 	<string name="my_field">My Field</string>
-	
-	
+	<string name="select_difficult">Select Difficult Level</string>
+	<string name="veryeasy">Very Easy</string>
+	<string name="easy">Easy</string>
+	<string name="normal">Normal</string>
+	<string name="hard">Hard</string>
 </resources>

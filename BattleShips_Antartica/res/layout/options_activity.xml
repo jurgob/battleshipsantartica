@@ -10,10 +10,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_margin="20sp"
     >
+
+<Button android:id="@+id/ButtonSelectDifficult"  android:layout_width="fill_parent" android:layout_height="wrap_content"   android:text="@string/select_difficult" ></Button>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/menu_select_difficult"
+    >
+
+	<Button android:text="@string/veryeasy" android:visibility="visible"  android:id="@+id/btn_veryeasy" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+	<Button android:text="@string/easy" android:visibility="visible" android:id="@+id/btn_easy" android:layout_width="200sp"  android:layout_height="wrap_content"  ></Button>
+	<Button android:text="@string/normal" android:visibility="visible" android:id="@+id/btn_normal" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+	<Button android:text="@string/hard" android:visibility="visible" android:id="@+id/btn_hard" android:layout_width="200sp" android:layout_height="wrap_content" ></Button>
+
+	</LinearLayout>
 
 <SMW.battleships.LoginButton android:id="@+id/LoginButton" android:src="@drawable/login_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="30dp"/>
 <!--<Button android:id="@+id/ActivateNotifyFacebook"  android:layout_width="wrap_content" android:layout_height="wrap_content"   android:text="@string/activate_facebook_notification" ></Button>-->
@@ -21,6 +38,17 @@
 
 </LinearLayout>
 <Button android:id="@+id/ButtonBackMenu"  android:layout_width="fill_parent" android:layout_height="wrap_content"   android:text="@string/back_main" ></Button>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    >
+
+<!--<Button android:text="@string/select_difficult" android:id="@+id/ButtonSelectDifficult"  android:layout_width="fill_parent" android:layout_height="wrap_content" ></Button>-->
+
+</LinearLayout>
 
 
 </LinearLayout>

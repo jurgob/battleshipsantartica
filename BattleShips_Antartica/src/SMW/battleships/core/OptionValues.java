@@ -4,11 +4,17 @@ import SMW.facebook.AsyncFacebookRunner;
 import SMW.facebook.Facebook;
 
  public class OptionValues {
+	 public enum Difficult {
+			VERYEASY, EASY, NORMAL, HARD
+		}
+	 
 	 static int rows;
 	 static int columns;
 	 static boolean facebookNotify;
 	 public static  Facebook facebook;
 	 public static AsyncFacebookRunner myAsyncRunner;
+	 public static Difficult difficult=Difficult.HARD;
+	 
 	 
 	public static boolean isFacebookNotify() {
 		return facebookNotify;

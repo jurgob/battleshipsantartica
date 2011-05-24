@@ -8,9 +8,11 @@ import SMW.battleships.core.DummyStrategy;
 import SMW.battleships.core.OptionValues;
 import SMW.battleships.core.SequentialStrategy;
 import SMW.battleships.core.SmartStrategy;
+import SMW.battleships.core.SoSmartStrategy;
 import SMW.battleships.core.BattleShips.InsertOrientation;
 import SMW.battleships.core.BattleShips.Move;
 import SMW.battleships.core.BattleShips.Player;
+import SMW.battleships.core.OptionValues.Difficult;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -41,9 +43,32 @@ public class ActivityGame extends Activity {
      gameView=new BSView(this);
      gameView.setModel(bs);
      BSPlayer human= new BSPlayer(bs,gameView.userStrategy() );
-//     BSPlayer computer = new BSPlayer(bs, new SequentialStrategy());
+     BSPlayer computer = null;
+     switch (OptionValues.difficult) {
+	case VERYEASY:
+		computer=new BSPlayer(bs, new SequentialStrategy());
+		break;
+	case EASY:
+		computer=new BSPlayer(bs, new DummyStrategy());
+		break;
+	case NORMAL:
+		computer=new BSPlayer(bs, new SmartStrategy());
+		break;
+	case HARD:
+		computer=new BSPlayer(bs, new SoSmartStrategy());
+		break;
+
+	default:
+		computer=new BSPlayer(bs, new SoSmartStrategy());
+		break;
+	}
+     
+   
+    	 
 //     BSPlayer computer = new BSPlayer(bs, new DummyStrategy());
-     BSPlayer computer = new BSPlayer(bs, new SmartStrategy());
+//     BSPlayer computer = new BSPlayer(bs, new SmartStrategy());
+//     if(OptionValues.difficult==Difficult.HARD)
+//     BSPlayer computer = new BSPlayer(bs, new SoSmartStrategy());
      BSGame game = new BSGame(bs);
      game.addPlayer(human);
      gameView.setPlayer(human.player);

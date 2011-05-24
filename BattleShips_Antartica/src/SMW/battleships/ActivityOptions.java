@@ -3,6 +3,7 @@ package SMW.battleships;
 import SMW.battleships.SessionEvents.AuthListener;
 import SMW.battleships.SessionEvents.LogoutListener;
 import SMW.battleships.core.OptionValues;
+import SMW.battleships.core.OptionValues.Difficult;
 import SMW.facebook.AsyncFacebookRunner;
 import SMW.facebook.Facebook;
 import android.app.Activity;
@@ -11,8 +12,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -74,6 +77,8 @@ public class ActivityOptions extends Activity {
         activateFacebook = (LoginButton)findViewById(R.id.LoginButton);
         backMenu = (Button)findViewById(R.id.ButtonBackMenu);
         
+        
+        //back button settings
         backMenu.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -83,16 +88,93 @@ public class ActivityOptions extends Activity {
 				return false;
 			}
 		}); 
+        
+        //facebook settings
     	mFacebook = new Facebook();
        	AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(mFacebook);
        	SessionStore.restore(mFacebook, this);
         SessionEvents.addAuthListener(new SampleAuthListener());
         SessionEvents.addLogoutListener(new SampleLogoutListener());
-       	
        	activateFacebook.init(mFacebook, PERMISSIONS);
         
+       //difficult settings
+       	Button btnShowDifficultLevels=(Button) findViewById(R.id.ButtonSelectDifficult);
+        btnShowDifficultLevels.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				LinearLayout startGameMenu= (LinearLayout)findViewById(R.id.menu_select_difficult);
+ 				
+				if(startGameMenu.getVisibility()==View.VISIBLE){
+					startGameMenu.setVisibility(View.GONE);	
+				}else{
+					startGameMenu.setVisibility(View.VISIBLE);
+				}
+				
+			}
+		}); 
+        
+        final Button btnShowVeryEasy=(Button) findViewById(R.id.btn_veryeasy);
+        final Button btnShowEasy=(Button) findViewById(R.id.btn_easy);
+        final Button btnShowNormal=(Button) findViewById(R.id.btn_normal);
+        final Button btnShowHard=(Button) findViewById(R.id.btn_hard);
        
-       	
-       	
+        if(OptionValues.difficult == Difficult.VERYEASY) btnShowVeryEasy.setEnabled(false);
+        if(OptionValues.difficult == Difficult.EASY) btnShowEasy.setEnabled(false);
+        if(OptionValues.difficult == Difficult.NORMAL) btnShowNormal.setEnabled(false);
+        if(OptionValues.difficult == Difficult.HARD) btnShowHard.setEnabled(false);
+        
+        
+        btnShowVeryEasy.setOnClickListener(new OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				OptionValues.difficult=Difficult.VERYEASY;
+			    btnShowVeryEasy.setEnabled(false);
+		         btnShowEasy.setEnabled(true);
+		         btnShowNormal.setEnabled(true);
+		         btnShowHard.setEnabled(true);
+		        
+				
+			}
+		}); 
+      
+        btnShowEasy.setOnClickListener(new OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				OptionValues.difficult=Difficult.EASY;
+			    btnShowVeryEasy.setEnabled(true);
+		         btnShowEasy.setEnabled(false);
+		         btnShowNormal.setEnabled(true);
+		         btnShowHard.setEnabled(true);
+		        
+				
+			}
+		}); 
+        btnShowNormal.setOnClickListener(new OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				OptionValues.difficult=Difficult.NORMAL;
+			    btnShowVeryEasy.setEnabled(true);
+		         btnShowEasy.setEnabled(true);
+		         btnShowNormal.setEnabled(false);
+		         btnShowHard.setEnabled(true);
+		        
+				
+			}
+		});
+        
+        btnShowHard.setOnClickListener(new OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				OptionValues.difficult=Difficult.HARD;
+			    btnShowVeryEasy.setEnabled(true);
+		         btnShowEasy.setEnabled(true);
+		         btnShowNormal.setEnabled(true);
+		         btnShowHard.setEnabled(false);
+		        
+				
+			}
+		}); 
+        
     }
 }
