@@ -195,10 +195,13 @@ public class BSView extends TableLayout implements BSUser {
 		
 	}
 	
+	
+	
+	
 	public BSView(Context context) {
 		super(context);
 		
-		
+		System.out.println("BSVIEW COSTRUCTOR");
 		invalidate = new Invalidate();
 		
 		fieldView = new BSFieldView(context);
