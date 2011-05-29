@@ -80,9 +80,10 @@ public class ActivityGame extends Activity {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
 	{
+		//Log.d("activity game:", "onConfigurationChanged");
 	    super.onConfigurationChanged(newConfig);
-	    setContentView(R.layout.game_activity);
-	    initUI();
+	    //setContentView(R.layout.game_activity);
+	    //initUI();
 
 	    
 	}
