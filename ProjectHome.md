@@ -1,0 +1,1 @@
+Battleships Antartica is a Android Battleships with networking support
